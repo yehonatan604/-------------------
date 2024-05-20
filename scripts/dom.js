@@ -1,7 +1,19 @@
-import { countries } from './countries.js';
+import { countries, reset, search as goSearch } from './countries.js';
 
 const search = document.getElementById('search');
 const cards = document.getElementById('cards');
+
+search.addEventListener('input', (e) => {
+    const word = e.target.value;
+    cards.innerHTML = '';
+    reset();
+    if (word === '' || word === null) {
+        cards.innerHTML = '';
+        createAllCards();
+    }
+    goSearch(word);
+    createAllCards();
+});
 
 const createCard = (country) => {
     const cardDiv = document.createElement('div');
@@ -9,7 +21,7 @@ const createCard = (country) => {
 
     const cardImg = document.createElement('img');
     cardImg.src = country.flags.png;
-    cardImg.className = 'card-img-top';
+    cardImg.className = 'card-img-top img border shadow rounded mt-2';
 
     const cardBody = document.createElement('div');
     cardBody.className = 'card-body';

@@ -1,4 +1,5 @@
 let countries = [];
+let countriesFull = [];
 
 const getDataThen = () => {
     fetch("https://pokeapi.co/api/v2/pokemon?limit=200")
@@ -21,9 +22,21 @@ const getDataAsync = async () => {
         const data = await res.json();
         console.log(data);
         countries = data;
+        countriesFull = [...data];
     } catch (err) {
         console.log(err);
     }
 }
 
-export { getDataAsync, countries };
+const reset = () => {
+    countries = [...countriesFull];
+}
+
+const search = (word) => {
+    countries = countries.filter((country) => {
+        const name = country.name.common.toLowerCase();
+        return name.includes(word.toLowerCase());
+    });
+}
+
+export { getDataAsync, countries, search, reset };
